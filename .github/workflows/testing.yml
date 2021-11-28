@@ -12,7 +12,7 @@ jobs:
       COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
     steps:
       - name: commit messages
-        run: echo "COMMIT_MESSAGES"
+        run: echo "$COMMIT_MESSAGES"
       - name: constains skip
         if: "contains(join(';',env.COMMIT_MESSAGES), '#skip')"
         run: echo "true"
