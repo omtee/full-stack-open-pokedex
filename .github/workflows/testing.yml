@@ -8,14 +8,14 @@ on:
 jobs:
   a_test_job:
     runs-on: ubuntu-18.04
+    env:
+      COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
     steps:
       - name: commit messages
-        env:
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        run: echo "$COMMIT_MESSAGES"
+        run: echo "env.COMMIT_MESSAGES"
       - name: constains skip
-        if: "contains(join(';',$COMMIT_MESSAGES), '#skip')"
+        if: "contains(join(';',env.COMMIT_MESSAGES), '#skip')"
         run: echo "true"
       - name: does not contain skip
-        if: "!contains(join(';',$COMMIT_MESSAGES), '#skip')"
+        if: "!contains(join(';',env.COMMIT_MESSAGES), '#skip')"
         run: echo "true"
