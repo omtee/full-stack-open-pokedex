@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-      JOINED_MESSAGES: ${{ join(';', env.COMMIT_MESSAGES) }}
+      JOINED_MESSAGES: ${{ join(';', COMMIT_MESSAGES) }}
     steps:
       - name: commit messages
         run: echo "$COMMIT_MESSAGES"
