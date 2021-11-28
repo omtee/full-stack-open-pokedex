@@ -10,15 +10,16 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-      JOINED_MESSAGES: ${{ join(';', COMMIT_MESSAGES) }}
     steps:
       - name: commit messages
         run: echo "$COMMIT_MESSAGES"
       - name: joined messages
         run: echo "$JOINED_MESSAGES"
+        env:
+          JOINED_MESSAGES: ${{ join(';', env.COMMIT_MESSAGES) }}
       - name: constains skip
-        if: ${{ contains(env.JOINED_MESSAGES, 'skip') }}
+        if: ${{ contains(join(';', env.COMMIT_MESSAGES), 'skip') }}
         run: echo "true"
       - name: does not contain skip
-        if: ${{ !contains(env.JOINED_MESSAGES, 'skip') }}
+        if: ${{ !contains(join(';', env.COMMIT_MESSAGES), 'skip') }}
         run: echo "true"
