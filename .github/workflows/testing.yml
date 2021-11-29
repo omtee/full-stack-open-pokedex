@@ -9,12 +9,8 @@ jobs:
   a_test_job:
     runs-on: ubuntu-18.04
     env:
-      COMMIT_MESSAGES: ${{ github.event.commits.*.message }}
+      COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
     steps:
-      #- name: gihub context
-      #  env:
-      #    GITHUB_CONTEXT: ${{ toJson(github) }}
-      #  run: echo "$GITHUB_CONTEXT"
       - name: commit messages
         run: echo "hello $COMMIT_MESSAGES"
       - name: constains skip
