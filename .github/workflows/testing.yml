@@ -9,21 +9,17 @@ jobs:
   a_test_job:
     runs-on: ubuntu-18.04
     env:
-      COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+      COMMIT_MESSAGES: ${{ github.event.commits.*.message }}
     steps:
-      - name: gihub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      #- name: gihub context
+      #  env:
+      #    GITHUB_CONTEXT: ${{ toJson(github) }}
+      #  run: echo "$GITHUB_CONTEXT"
       - name: commit messages
-        run: echo "$COMMIT_MESSAGES"
-      - name: joined messages
-        env:
-          JOINED_MESSAGES: ${{ toJson(join(';', github.event.commits.*.message)) }}
-        run: echo "$JOINED_MESSAGES"
+        run: echo "hello $COMMIT_MESSAGES"
       - name: constains skip
-        if: ${{ contains(join(';', env.JOINED_MESSAGES), 'skip') }}
+        if: ${{ contains(join('-', github.event.commits.*.message), 'skip') }}
         run: echo "true"
       - name: does not contain skip
-        if: ${{ !contains(join(';', env.JOINED_MESSAGES), 'skip') }}
+        if: ${{ !contains(join('-', github.event.commits.*.message), 'skip') }}
         run: echo "true"
