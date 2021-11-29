@@ -11,6 +11,10 @@ jobs:
     env:
       COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
     steps:
+      - name: gihub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: commit messages
         run: echo "$COMMIT_MESSAGES"
       - name: joined messages
