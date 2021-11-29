@@ -15,7 +15,7 @@ jobs:
         run: echo "$COMMIT_MESSAGES"
       - name: joined messages
         env:
-          JOINED_MESSAGES: ${{ join(';', env.COMMIT_MESSAGES) }}
+          JOINED_MESSAGES: ${{ join(';', toJson(github.event.commits.*.message)) }}
         run: echo "$JOINED_MESSAGES"
       - name: constains skip
         if: ${{ contains(join(';', env.COMMIT_MESSAGES), 'skip') }}
