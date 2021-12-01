@@ -9,14 +9,15 @@ jobs:
   a_test_job:
     runs-on: ubuntu-18.04
     env:
-      COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+      COMMIT_MESSAGES: ${{ join(github.event.commits.*.message, ', ') }}
     steps:
       - name: commit messages
-        run: echo "hello $COMMIT_MESSAGES"
+        env:
+          JSON_MESSAGES: ${{ toJSON(env.COMMIT_MESSAGES) }}
+        run: echo "hello $JSON_MESSAGES"
       - name: constains skip
-        #if: ${{ contains(join('-', github.event.commits.*.message), 'skip') }}
-        if: ${{ contains(github.event.commits.head_commit.message, '#skip') }}
+        if: ${{ contains(env.COMMIT_MESSAGES , '#skip') }}
         run: echo "true"
       - name: does not contain skip
-        if: ${{ !contains(join('-', github.event.commits.*.message), 'skip') }}
+        if: ${{ !contains(env.COMMIT_MESSAGES , '#skip') }}
         run: echo "true"
