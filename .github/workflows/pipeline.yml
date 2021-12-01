@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - master
-  #pull_request:
-  #  branches: [master]
-  #  types: [opened, synchronize]
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
 
 jobs:
   simple_deployment_pipeline:
@@ -66,7 +66,6 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     - name: Deploy failure notification to Slack
-      #if: ${{ steps.deploy.outcome == 'failure' }}
       if: ${{ failure() && steps.deploy.outcome == 'failure' }}
       uses: 8398a7/action-slack@v3
       with:
