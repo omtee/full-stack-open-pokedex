@@ -50,8 +50,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BUMP: 'patch'
-    - name: Success notification to Slack
-      if: ${{ steps.deploy.outcome == 'success' && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
+    - name: Deploy success notification to Slack
+      if: ${{ steps.deploy.outcome == 'success' }}
       uses: 8398a7/action-slack@v3
       with:
         status: custom
@@ -65,8 +65,8 @@ jobs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    - name: Failure notification to Slack
-      if: ${{ steps.deploy.outcome == 'failure' && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
+    - name: Deploy failure notification to Slack
+      if: ${{ steps.deploy.outcome == 'failure' }}
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
