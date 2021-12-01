@@ -49,12 +49,27 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BUMP: 'patch'
-    - name: Notification to Slack
-      if: ${{ always() }}
+    - name: Failure notification to Slack
+      if: ${{ job.status == 'failure' && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    - name: Success notification to Slack
+      if: ${{ job.status == 'success' && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
+      uses: 8398a7/action-slack@v3
+      with:
+        status: custom
+        fields: workflow,job,commit,repo,ref,author,took
+        custom_payload: |
+          {
+            attachments: [{
+              color: 'danger',
+              text: `A new version deployd to https://${secrets.HEROKU_APP}.herokuapp.com/ (${process.env.AS_COMMIT})\nby ${process.env.AS_AUTHOR}\nbuild took ${process.env.AS_TOOK}`,
+            }]
+          }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
