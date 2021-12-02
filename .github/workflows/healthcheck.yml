@@ -1,6 +1,6 @@
 name: Periodic health check
 
-op:
+on:
   push:
     branches:
       - master
