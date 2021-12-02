@@ -14,6 +14,6 @@ jobs:
       with:
         url: https://whispering-headland-54961.herokuapp.com/health
         follow-redirect: no
-        max-attemps: 3
+        max-attempts: 3
         retry-delay: 5s
         retry-all: no
