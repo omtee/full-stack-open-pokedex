@@ -1,0 +1,19 @@
+name: Periodic health check
+
+op:
+  push:
+    branches:
+      - master
+
+jobs:
+  simple_deployment_pipeline:
+   runs-on: ubuntu-18.04
+   steps:
+    - name: Check the deployed service URL
+      uses: jtalk/url-health-check-action@v2
+      with:
+        url: https://whispering-headland-54961.herokuapp.com/health
+        follow-redirect: no
+        max-attemps: 3
+        retry-delay: 5s
+        retry-all: no
