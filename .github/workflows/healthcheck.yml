@@ -3,7 +3,7 @@ name: Periodic health check
 on:
   push:
     branches:
-      - master
+      - healthcheck
 
 jobs:
   simple_deployment_pipeline:
