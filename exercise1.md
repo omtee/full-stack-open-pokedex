@@ -1,0 +1,7 @@
+I have a team of six people working with an application. Language used is JavaScript (Node & React).
+
+To handle the development, our team is using GitHub to manage the project. This allows the group to be up-to-date with the code and what other members are doing with the project. Also, with Git members can create branches for what they are  working for and then merge those to the main code. Merging should be done using 'pull request', where the team leader or other authority can review the code before accepting it for merging.
+
+With CI setup, we can automate certain steps to check that the new code is up to standards. These steps commonly include linting, testing and building. For out JavaScript project we can do linting with library like Eslint. Testing we use library called Jest. Building the client side React code is done with Webpack. In our project we use GitHub Actions, but many alternatives are available such as Jenkins, AWS CodeBuild, Azure DevOps and BitBucket Pipelines, to name a few bigger ones.
+
+Our project does not contain sensitive information, so we can without too much fear host it in a public cloud such as GitHub. We still want to keep our code within our team, so the repo is set to be private. If we would have some very sensitive trade secrets, we could self-host the repo in our self-hosted servers. Self-hosting would mean having the server hardware in our hands, but also meaning our company would have to spend extra effort to service and maintain it.
